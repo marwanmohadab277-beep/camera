@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>كاميرا</title>
+  </head>
+  <body>
+    <h2>التقاط صورة من الكاميرا 📸</h2>
+    
+    <video id="video" width="640" height="480" autoplay></video>
+    <br>
+    <button id="snap">التقاط صورة</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+      // طلب إذن الكاميرا
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          document.getElementById("video").srcObject = stream;
+        })
+        .catch(err => {
+          alert("فشل في فتح الكاميرا: " + err);
+        });
+
+      // التقاط الصورة
+      document.getElementById("snap").addEventListener("click", () => {
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+        context.drawImage(document.getElementById("video"), 0, 0, 640, 480);
+      });
+    </script>
+  </body>
+</html>
